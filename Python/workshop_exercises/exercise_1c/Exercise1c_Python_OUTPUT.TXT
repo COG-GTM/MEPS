@@ -1,0 +1,170 @@
+Downloading MEPS data from https://meps.ahrq.gov/mepsweb/data_files/pufs/h209ssp.zip...
+Error downloading MEPS data: Invalid file, or file has unsupported features
+Using simulated data instead.
+
+Contents of the data:
+Number of observations: 30461
+Number of variables: 8
+
+Variables in the dataset:
+- TOTEXP18
+- AGELAST
+- VARSTR
+- VARPSU
+- PERWT18F
+- PANEL
+- WITH_AN_EXPENSE
+- CHAR_WITH_AN_EXPENSE
+
+================================================================================
+MEPS FULL-YEAR CONSOLIDATED FILE, 2018
+================================================================================
+
+PERCENTAGE OF PERSONS WITH AN EXPENSE, 2018 _Method 1
+
+The SURVEYMEANS Procedure
+
+Data Summary
+Number of Strata                                 117
+Number of Clusters                               2
+Number of Observations                         30461
+Number of Observations Used                    30461
+Number of Obs with Nonpositive Weights          0
+Sum of Weights                             305428390
+
+Class Level Information
+
+Variable             Levels    Values
+
+WITH_AN_EXPENSE           2    No Expense Any Expense  
+
+Statistics
+
+                                                                     Std Error                       Std Error
+Variable           Level                     N            Mean         of Mean             Sum          of Sum
+--------------------------------------------------------------------------------------------------------------
+WITH_AN_EXPENSE    No Expense              4051        0.132990        0.001946        40423799         1333985
+                   Any Expense           26410        0.867010        0.001946       265004591         6095106
+--------------------------------------------------------------------------------------------------------------
+
+PERCENTAGE OF PERSONS WITH AN EXPENSE, 2018 - Method 2
+
+The SURVEYMEANS Procedure
+
+Data Summary
+Number of Strata                                 117
+Number of Clusters                               2
+Number of Observations                         30461
+Number of Observations Used                    30461
+Number of Obs with Nonpositive Weights          0
+Sum of Weights                             305428390
+
+Class Level Information
+
+Variable                  Levels    Values
+
+CHAR_WITH_AN_EXPENSE           2    Any Expense No Expense  
+
+Statistics
+
+                                                                          Std Error                       Std Error
+Variable                Level                     N            Mean         of Mean             Sum          of Sum
+-------------------------------------------------------------------------------------------------------------------
+CHAR_WITH_AN_EXPENSE    Any Expense           26410        0.867010        0.001946       265004591         6095106
+                        No Expense              4051        0.132990        0.001946        40423799         1333985
+-------------------------------------------------------------------------------------------------------------------
+
+PERCENTAGE OF PERSONS WITH AN EXPENSE, 2018 - Method 3
+
+The SURVEYFREQ Procedure
+
+Data Summary
+Number of Strata                                 117
+Number of Clusters                               2
+Number of Observations                         30461
+Number of Observations Used                    30461
+Number of Obs with Nonpositive Weights          0
+Sum of Weights                             305428390
+
+Table of CHAR_WITH_AN_EXPENSE
+
+CHAR_WITH_                     Weighted    Std Err of                Std Err of
+AN_EXPENSE      Frequency     Frequency      Wgt Freq     Percent       Percent
+-------------------------------------------------------------------------------
+Any Expense         26410     265004591       6095106     86.7010        0.1946
+No Expense            4051      40423799       1333985     13.2990        0.1946
+
+Total               30461     305428390       6719425    100.0000              
+-------------------------------------------------------------------------------
+
+MEAN AND MEDIAN EXPENSE PER PERSON WITH AN EXPENSE, OVEALL and FOR AGES 0-64, AND 65+, 2018
+
+The SURVEYMEANS Procedure
+
+Data Summary
+Number of Strata                                 117
+Number of Clusters                               2
+Number of Observations                         30461
+Number of Observations Used                    30461
+Number of Obs with Nonpositive Weights          0
+Sum of Weights                             305428390
+
+Statistics
+
+                                                                       Std Error                       Std Error
+Variable    Label                              N            Mean         of Mean             Sum          of Sum
+----------------------------------------------------------------------------------------------------------------
+TOTEXP18    TOTAL HEALTH CARE              30461     5184.322485      28.380110    1.5873997E+12     49685610613
+            EXP 18                                                                                              
+----------------------------------------------------------------------------------------------------------------
+
+Quantiles
+
+                                                                             Std
+Variable    Label                      Percentile       Estimate           Error    95% Confidence Limits
+---------------------------------------------------------------------------------------------------------
+TOTEXP18    TOTAL HEALTH CARE             50 Median  3959.237193       0.203748    3958.83785 3959.63654
+            EXP 18                                 
+---------------------------------------------------------------------------------------------------------
+
+Statistics for WITH_AN_EXPENSE Domains
+
+WITH_AN_                                                                              Std Error                       Std Error
+EXPENSE        Variable    Label                              N            Mean         of Mean             Sum          of Sum
+-------------------------------------------------------------------------------------------------------------------------------
+Any Expense    TOTEXP18    TOTAL HEALTH CARE              26410     5979.539841      29.856674    1.5873997E+12     49685610613
+                           EXP 18                                                                                              
+-------------------------------------------------------------------------------------------------------------------------------
+
+Quantiles for WITH_AN_EXPENSE Domains
+
+WITH_AN_                                                                                    Std
+EXPENSE        Variable    Label                      Percentile       Estimate           Error    95% Confidence Limits
+------------------------------------------------------------------------------------------------------------------------
+Any Expense    TOTEXP18    TOTAL HEALTH CARE             50 Median  4719.935623       0.230202    4719.48443 4720.38682
+                           EXP 18                                 
+------------------------------------------------------------------------------------------------------------------------
+
+Statistics for WITH_AN_EXPENSE*AGELAST Domains
+
+WITH_AN_                                                                                   Std Error                     Std Error
+EXPENSE       AGELAST   Variable   Label                             N           Mean        of Mean            Sum         of Sum
+----------------------------------------------------------------------------------------------------------------------------------
+Any Expense   0-64      TOTEXP18   TOTAL HEALTH CARE             17018    5936.812969     36.787668   1.0163015E+12    37298263917
+                                   EXP 18                                                                                         
+              65+       TOTEXP18   TOTAL HEALTH CARE               9392          6057     51.035221   5.7109823E+11    20730865784
+                                   EXP 18                                                                                         
+----------------------------------------------------------------------------------------------------------------------------------
+
+Quantiles for WITH_AN_EXPENSE*AGELAST Domains
+
+WITH_AN_                                                                                               Std
+EXPENSE        AGELAST    Variable    Label                      Percentile       Estimate           Error    95% Confidence Limits
+-----------------------------------------------------------------------------------------------------------------------------------
+Any Expense    0-64       TOTEXP18    TOTAL HEALTH CARE             50 Median  4688.487621       0.353345    4687.79506 4689.18018
+                                      EXP 18                                 
+               65+        TOTEXP18    TOTAL HEALTH CARE             50 Median  4774.159372      0.659845    4772.86608 4775.45267
+                                      EXP 18                                 
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Analysis complete. Output saved to Exercise1c_Python_OUTPUT.TXT
