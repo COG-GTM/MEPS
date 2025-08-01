@@ -1,0 +1,16 @@
+{
+  "pct_with_expense": 86.67029781705817,
+  "pct_without_expense": 13.32970218294183,
+  "freq_with_expense": 25200,
+  "freq_without_expense": 4215,
+  "weighted_freq_with_expense": 282829352.271255,
+  "weighted_freq_without_expense": 43498535.59206501,
+  "overall_mean": 6063.1344580773375,
+  "overall_median": 1317.0,
+  "mean_expense_with_expense": 6995.631272521152,
+  "median_expense_with_expense": 1850.0,
+  "mean_expense_0_64": 5660.498285946612,
+  "median_expense_0_64": 1405.0,
+  "mean_expense_65plus": 12865.6434478842,
+  "median_expense_65plus": 5877.252296785428
+}
