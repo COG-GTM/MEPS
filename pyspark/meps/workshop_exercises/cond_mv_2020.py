@@ -152,6 +152,14 @@ def merge_with_fyc(
     # Add flag column before merge
     ob_mh_flagged = ob_mh_df.withColumn("MH_OB", F.lit(1))
 
+    # Drop columns from ob_mh that overlap with FYC to avoid ambiguous refs
+    cols_to_keep = ["DUPERSID", "EVNTIDX", "EVENTYPE", "MH_OB_VISIT", "MH_OB"]
+    if "OBXP20X" in ob_mh_flagged.columns:
+        cols_to_keep.append("OBXP20X")
+    ob_mh_flagged = ob_mh_flagged.select(
+        [c for c in cols_to_keep if c in ob_mh_flagged.columns]
+    )
+
     merged = fyc_df.join(
         ob_mh_flagged,
         on="DUPERSID",

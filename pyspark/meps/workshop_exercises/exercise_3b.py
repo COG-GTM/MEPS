@@ -64,15 +64,16 @@ def identify_diabetes_events(
     """
     diab = cond_df.filter(F.col("CCCODEX").isin("049", "050"))
 
-    # Merge with condition-event link
+    # Merge with condition-event link (join on both DUPERSID and CONDIDX
+    # to avoid cross-person linkage since CONDIDX is not globally unique)
     diab_events = diab.select("DUPERSID", "CONDIDX", "CCCODEX").join(
-        clnk_df.select("CONDIDX", "EVNTIDX"),
-        on="CONDIDX",
+        clnk_df.select("DUPERSID", "CONDIDX", "EVNTIDX"),
+        on=["DUPERSID", "CONDIDX"],
         how="inner",
     )
 
-    # De-duplicate by EVNTIDX
-    return diab_events.select("DUPERSID", "EVNTIDX").dropDuplicates(["EVNTIDX"])
+    # De-duplicate by DUPERSID + EVNTIDX
+    return diab_events.select("DUPERSID", "EVNTIDX").dropDuplicates(["DUPERSID", "EVNTIDX"])
 
 
 def standardize_event_expenses(
