@@ -83,17 +83,17 @@ def run_etl(
 
     # --- Merge conditions to CLNK by condidx ---
     # Stata: merge m:m condidx using CLNK_2020; drop if _merge~=3
-    cond_clnk = hl_cond.join(clnk, on="CONDIDX", how="inner")
+    cond_clnk = hl_cond.join(clnk, on=["DUPERSID", "CONDIDX"], how="inner")
     checkpoints["cond_clnk"] = cond_clnk
 
     # --- CRITICAL: De-duplicate on EVNTIDX ---
     # Stata: duplicates drop evntidx, force
-    cond_clnk_dedup = cond_clnk.dropDuplicates(["EVNTIDX"])
+    cond_clnk_dedup = cond_clnk.dropDuplicates(["DUPERSID", "EVNTIDX"])
     checkpoints["cond_clnk_dedup"] = cond_clnk_dedup
 
     # --- Merge to PMED by evntidx ---
     # Stata: merge 1:m evntidx using PM_2020; drop if _merge~=3
-    linked = cond_clnk_dedup.join(pmed, on="EVNTIDX", how="inner")
+    linked = cond_clnk_dedup.join(pmed, on=["DUPERSID", "EVNTIDX"], how="inner")
     checkpoints["linked"] = linked
 
     # --- Collapse to person level ---
