@@ -1,0 +1,7 @@
+pyspark>=3.4.0
+pytest>=7.0.0
+python-docx>=0.8.11
+psutil>=5.9.0
+samplics>=0.4.0
+numpy>=1.24.0
+pandas>=2.0.0
