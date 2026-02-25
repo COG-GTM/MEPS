@@ -158,8 +158,6 @@ print("Total expenditures and mean expenditure per person")
 print("by event type and source of payment, 2016")
 print("=" * 80)
 
-total_weight = FYC.agg(F.sum(F.col(WEIGHT)).alias("total_weight")).collect()[0]["total_weight"]
-
 agg_exprs = []
 for var_name in expenditure_vars:
     agg_exprs.append(
