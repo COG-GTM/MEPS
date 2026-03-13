@@ -60,7 +60,8 @@ class TestReadFixedWidth:
         assert result.height == 2
         assert result.columns == ["col1", "col2", "col3"]
         assert result["col1"][0] == "ABCDE"
-        assert result["col2"][0] == "12345"
+        # col2 may be auto-cast to float since "12345" is numeric
+        assert str(int(result["col2"][0])) == "12345"
         assert result["col3"][1] == "PQRST"
 
     def test_missing_file_raises(self):

@@ -191,8 +191,17 @@ def _try_samplics_estimate(
     """Try to use samplics TaylorEstimator. Returns (estimate, se) or None on failure."""
     try:
         from samplics.estimation import TaylorEstimator
+        from samplics.utils.types import PopParam
 
-        estimator = TaylorEstimator(param)
+        param_map = {
+            "mean": PopParam.mean,
+            "total": PopParam.total,
+            "proportion": PopParam.prop,
+            "prop": PopParam.prop,
+            "ratio": PopParam.ratio,
+        }
+        pp = param_map.get(param, param)
+        estimator = TaylorEstimator(pp)
         if domain is not None and not np.all(domain):
             domain_labels = np.where(domain, "in_domain", "out_domain")
             estimator.estimate(

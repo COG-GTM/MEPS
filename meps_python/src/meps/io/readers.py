@@ -58,17 +58,25 @@ _EVENT_SUFFIXES = {
 
 def _load_file_names_csv() -> pl.DataFrame:
     """Load the meps_file_names.csv reference file."""
-    csv_path = Path(__file__).resolve().parents[4] / ".." / "Quick_Reference_Guides" / "meps_file_names.csv"
-    if not csv_path.exists():
-        # Try alternate locations
-        for candidate in [
-            Path(__file__).resolve().parents[5] / "Quick_Reference_Guides" / "meps_file_names.csv",
-            Path(os.environ.get("MEPS_REPO_ROOT", "")) / "Quick_Reference_Guides" / "meps_file_names.csv",
-        ]:
-            if candidate.exists():
-                csv_path = candidate
-                break
-    return pl.read_csv(str(csv_path), null_values=["-", ""], ignore_errors=True, truncate_ragged_lines=True)
+    # Try several candidate locations relative to this file and environment
+    candidates = [
+        # meps_python/src/meps/io/readers.py -> parents[4] = meps_python/ -> .. = repo root
+        Path(__file__).resolve().parents[4] / "Quick_Reference_Guides" / "meps_file_names.csv",
+        # Direct repo root (parents[4] is repo root when installed editable)
+        Path(__file__).resolve().parents[3] / "Quick_Reference_Guides" / "meps_file_names.csv",
+        Path(__file__).resolve().parents[5] / "Quick_Reference_Guides" / "meps_file_names.csv",
+        # Environment variable override
+        Path(os.environ.get("MEPS_REPO_ROOT", "")) / "Quick_Reference_Guides" / "meps_file_names.csv",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return pl.read_csv(
+                str(candidate), null_values=["-", ""],
+                ignore_errors=True, truncate_ragged_lines=True,
+            )
+    raise FileNotFoundError(
+        "Could not find meps_file_names.csv. Set MEPS_REPO_ROOT env var to the MEPS repo root."
+    )
 
 
 def _resolve_file_name(year: int, file_type: str) -> str:

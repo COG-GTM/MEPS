@@ -28,26 +28,22 @@ class TestSurveyMean:
     """Test survey_mean function."""
 
     def test_returns_estimates(self, simple_design):
-        results = list(survey_mean(simple_design, ["x"]))
-        assert len(results) >= 1
-        est = results[0]
+        est = survey_mean(simple_design, ["x"])
         assert hasattr(est, "estimate")
         assert hasattr(est, "se")
         assert hasattr(est, "variable")
 
     def test_mean_is_reasonable(self, simple_design):
-        results = list(survey_mean(simple_design, ["x"]))
-        est = results[0]
+        est = survey_mean(simple_design, ["x"])
         # Mean of 0..199 should be close to 99.5
         assert 90 < est.estimate < 110
 
     def test_se_is_positive(self, simple_design):
-        results = list(survey_mean(simple_design, ["x"]))
-        assert results[0].se > 0
+        est = survey_mean(simple_design, ["x"])
+        assert est.se > 0
 
     def test_binary_mean_is_proportion(self, simple_design):
-        results = list(survey_mean(simple_design, ["binary"]))
-        est = results[0]
+        est = survey_mean(simple_design, ["binary"])
         # About 1/3 should be 1
         assert 0.2 < est.estimate < 0.5
 
@@ -56,19 +52,16 @@ class TestSurveyTotal:
     """Test survey_total function."""
 
     def test_returns_estimates(self, simple_design):
-        results = list(survey_total(simple_design, ["x"]))
-        assert len(results) >= 1
-        est = results[0]
+        est = survey_total(simple_design, ["x"])
         assert hasattr(est, "estimate")
         assert hasattr(est, "se")
 
     def test_total_is_reasonable(self, simple_design):
-        results = list(survey_total(simple_design, ["x"]))
-        est = results[0]
+        est = survey_total(simple_design, ["x"])
         # Total = sum(x) * weight / n * N
         # With equal weights of 1000, total ≈ mean * sum_of_weights
         assert est.estimate > 0
 
     def test_se_is_positive(self, simple_design):
-        results = list(survey_total(simple_design, ["x"]))
-        assert results[0].se > 0
+        est = survey_total(simple_design, ["x"])
+        assert est.se > 0
