@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "meps-python"
+version = "1.0.0"
+description = "Python migration of MEPS (Medical Expenditure Panel Survey) analysis tools"
+readme = "docs/migration_mapping.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+    "polars>=1.0",
+    "pyreadstat>=1.2",
+    "samplics>=0.4",
+    "statsmodels>=0.14",
+    "scipy>=1.11",
+    "numpy>=1.26",
+    "plotly>=5.18",
+    "matplotlib>=3.8",
+    "pyarrow>=14.0",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
