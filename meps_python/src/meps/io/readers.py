@@ -33,6 +33,9 @@ _FILE_TYPE_COLUMNS = {
     "DV": "Events",
     "OM": "Events",
     "Jobs": "Jobs",
+    "JOBS": "Jobs",
+    "LONG": "LONG",
+    "Longitudinal": "LONG",
     "PRPL": "PRPL",
     "CLNK": "CLNK",
     "RXLK": "RXLK",
@@ -79,6 +82,35 @@ def _load_file_names_csv() -> pl.DataFrame:
     )
 
 
+def _resolve_longitudinal_file_name(year: int) -> str:
+    """Resolve a longitudinal file name from the ending year.
+
+    Uses meps_longitudinal_file_names.csv which maps Panel -> Years -> File_Name.
+    The year parameter refers to the ending year of the longitudinal period.
+    """
+    candidates = [
+        Path(__file__).resolve().parents[4] / "Quick_Reference_Guides" / "meps_longitudinal_file_names.csv",
+        Path(__file__).resolve().parents[3] / "Quick_Reference_Guides" / "meps_longitudinal_file_names.csv",
+        Path(__file__).resolve().parents[5] / "Quick_Reference_Guides" / "meps_longitudinal_file_names.csv",
+        Path(os.environ.get("MEPS_REPO_ROOT", "")) / "Quick_Reference_Guides" / "meps_longitudinal_file_names.csv",
+    ]
+    long_csv = None
+    for candidate in candidates:
+        if candidate.exists():
+            long_csv = pl.read_csv(str(candidate), ignore_errors=True, truncate_ragged_lines=True)
+            break
+    if long_csv is None:
+        raise FileNotFoundError("Could not find meps_longitudinal_file_names.csv")
+
+    # Match by year appearing in the Years column (e.g. "1999-2000" contains "2000")
+    for row in long_csv.iter_rows(named=True):
+        years_str = str(row.get("Years", ""))
+        if str(year) in years_str:
+            return str(row["File_Name"]).strip()
+
+    raise ValueError(f"No longitudinal file found for year {year}")
+
+
 def _resolve_file_name(year: int, file_type: str) -> str:
     """Resolve a MEPS file name from year and type using meps_file_names.csv.
 
@@ -91,6 +123,10 @@ def _resolve_file_name(year: int, file_type: str) -> str:
     """
     if file_type == "Pooled linkage":
         return "h36u19"
+
+    # Handle longitudinal files from separate CSV
+    if file_type in ("LONG", "Longitudinal"):
+        return _resolve_longitudinal_file_name(year)
 
     file_names = _load_file_names_csv()
 
