@@ -136,7 +136,7 @@ def _resolve_file_name(year: int, file_type: str) -> str:
         raise ValueError(f"Year {year} not found in meps_file_names.csv")
 
     # Look up the column for this file type
-    if file_type in _EVENT_SUFFIXES:
+    if file_type in _EVENT_SUFFIXES and file_type not in ("RX", "PMED", "PMED Events"):
         col_name = "Events"
     elif file_type in _FILE_TYPE_COLUMNS:
         col_name = _FILE_TYPE_COLUMNS[file_type]

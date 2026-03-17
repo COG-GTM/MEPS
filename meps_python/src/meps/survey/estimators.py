@@ -723,7 +723,7 @@ def survey_by(
     design: MEPSSurveyDesign,
     variables: str | list[str],
     by: str | list[str],
-    fun: Callable,
+    fun: Callable | str,
     **kwargs,
 ) -> list[SurveyEstimate]:
     """Run a survey estimation function grouped by one or more categorical variables.
@@ -737,7 +737,7 @@ def survey_by(
         design: MEPSSurveyDesign object.
         variables: Variable name(s) to estimate.
         by: Grouping variable name(s).
-        fun: Estimation function (e.g., survey_mean, survey_total).
+        fun: Estimation function or string name (e.g., survey_mean, "mean", "total").
         **kwargs: Additional arguments passed to the estimation function.
 
     Returns:
@@ -747,6 +747,14 @@ def survey_by(
         variables = [variables]
     if isinstance(by, str):
         by = [by]
+
+    # Map string function names to callables
+    _FUN_MAP = {"mean": survey_mean, "total": survey_total, "proportion": survey_proportion}
+    if isinstance(fun, str):
+        fun_name = fun.lower()
+        if fun_name not in _FUN_MAP:
+            raise ValueError(f"Unknown fun: {fun}. Use one of: {list(_FUN_MAP.keys())}")
+        fun = _FUN_MAP[fun_name]
 
     data = design.data
 

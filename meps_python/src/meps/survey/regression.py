@@ -174,10 +174,10 @@ def _build_design_matrix(
 
 def _fit_wls(X: np.ndarray, y: np.ndarray, w: np.ndarray) -> np.ndarray:
     """Fit weighted least squares: beta = (X'WX)^{-1} X'Wy."""
-    W = np.diag(w)
-    XtW = X.T @ W
-    XtWX = XtW @ X
-    XtWy = XtW @ y
+    # Use element-wise multiplication to avoid O(n^2) memory from np.diag(w)
+    W_col = w.reshape(-1, 1)
+    XtWX = X.T @ (X * W_col)
+    XtWy = X.T @ (w * y)
     try:
         beta = np.linalg.solve(XtWX, XtWy)
     except np.linalg.LinAlgError:
